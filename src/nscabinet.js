@@ -88,7 +88,9 @@ module.exports.download = (files, params, callback) => {
                     contents : new Buffer(file.contents,'base64')
                 });
 
-                console.log(`Got file ${file.path}.`);
+                if (process.env.DEBUG != null) {
+                  console.log(`Got file ${file.path}.`);
+                }
 
                 this.emit('data',vynFile);
 
