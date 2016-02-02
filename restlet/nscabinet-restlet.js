@@ -87,7 +87,11 @@ var download = function (datain) {
 
             var files = nlapiSearchRecord('file', null, filter, columns) || [],
                 addFiles = files.filter(function (resFile) {
-                    return resFile.getValue('folder') == info.folderid;
+                    if (datain.recursive === true) {
+                      return true
+                    } else {
+                      return resFile.getValue('folder') == info.folderid;
+                    }
                 }).map(function (resFile) {
                     var file = nlapiLoadFile(resFile.getId());
                     return getFileData(file, info);
