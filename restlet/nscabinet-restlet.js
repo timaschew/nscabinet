@@ -14,7 +14,7 @@ var post = function (datain) {
 
     //ROUTER
 
-    log(datain);
+    log({datain: datain});
 
     switch (datain.action) {
     case 'download':
@@ -79,7 +79,7 @@ var download = function (datain) {
                 ['folder', 'anyof', info.folderid]
             ];
 
-            log(filter);
+            log({filter: filter});
 
             var columns = ['name', 'filetype', 'folder'].map(function (i) {
                 return new nlobjSearchColumn(i);
@@ -186,7 +186,8 @@ function pathInfo(pathIn, basePath, createFolders) {
             res_folder = nlapiSearchRecord('folder', null, filters);
 
         if (!res_folder && !createFolders) {
-            throw nlapiCreateError('FOLDER_NOT_FOUND', 'Folder ' + item + ' not found!', true);
+            // just do nothing if the file does not exist when try to download it
+            // throw nlapiCreateError('FOLDER_NOT_FOUND', 'Folder ' + item + ' not found!', true);
         } else if (!res_folder && createFolders) {
             var newFolderRec = nlapiCreateRecord('folder');
             newFolderRec.setFieldValue('name', item);
