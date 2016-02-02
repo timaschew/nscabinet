@@ -119,15 +119,19 @@ function requestOpts(params) {
     var nlauthRolePortion = ( params.role ) ? `,nlauth_role=${params.role}` : '',
         server = process.env.NS_SERVER || `https://rest.${params.realm}/app/site/hosting/restlet.nl`;
 
+    var headers = {};
+    if (process.env.NS_DEBUG_SESSION != null) {
+      headers.cookie = process.env.NS_DEBUG_SESSION;
+    } else {
+      headers.authorization = `NLAuth nlauth_account=${params.account},nlauth_email=${params.email},nlauth_signature=${params.password}${nlauthRolePortion}`;
+    }
     return {
         url: server,
         qs: {
             script: params.script,
             deploy: params.deployment
         },
-        method : 'POST' ,
-        headers: {
-            authorization: `NLAuth nlauth_account=${params.account},nlauth_email=${params.email},nlauth_signature=${params.password}${nlauthRolePortion}`
-        }
+        method : 'POST',
+        headers: headers
     };
 }
