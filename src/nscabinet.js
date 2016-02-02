@@ -58,14 +58,15 @@ module.exports.upload = module.exports;
 
 module.exports.checkParams = checkParams;
 
-module.exports.download = (files, params, callback) => {
-    params = checkParams(params);
+module.exports.download = (files, orignalParams, callback) => {
+    var params = checkParams(orignalParams);
 
     var toRequest = requestOpts(params);
     toRequest.json = {
         action : 'download' ,
         files : files ,
-        rootpath: params.rootPath
+        rootpath: params.rootPath,
+        recursive: orignalParams.recursive
     };
     var result = []
     var emitter = es.through(
