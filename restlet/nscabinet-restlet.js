@@ -100,8 +100,12 @@ var download = function (datain) {
             outfiles = outfiles.concat(addFiles);
             //case 2: direct load
         } else {
+          try {
             var file = nlapiLoadFile(info.pathabsolute.substr(1));
             outfiles = outfiles.concat([getFileData(file, info)]);
+          } catch (err) {
+              // don't crash the restlet when the file is not found
+          }
         }
     });
 
