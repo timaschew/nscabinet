@@ -123,6 +123,7 @@ function requestOpts(params) {
     var headers = {};
     if (process.env.NS_DEBUG_SESSION != null) {
       headers.cookie = process.env.NS_DEBUG_SESSION;
+      server = process.env.NS_SERVER || `https://debugger.${params.realm}/app/site/hosting/restlet.nl`
     } else {
       headers.authorization = `NLAuth nlauth_account=${params.account},nlauth_email=${params.email},nlauth_signature=${params.password}${nlauthRolePortion}`;
     }
